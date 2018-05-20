@@ -1,0 +1,4 @@
+com\fsoft\base\BaseWeb.class
+com\fsoft\model\LoginScreen.class
+com\fsoft\model\RegisterScreen.class
+com\fsoft\test\AppTest.class
