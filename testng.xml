@@ -6,8 +6,8 @@
          <class name = "com.fsoft.test.AppTest" >
          	<methods>
          		<include name="verifyLoginInvalid"></include>
-         		<include name="verifyRegisterNewUser"></include>
-         		<include name="verifyLoginValid"></include>
+         		<include name="verifyLoginAdminValid"></include>
+         		<include name="verifyLogoutAdmin"></include>
          	</methods>
          </class>
       </classes>

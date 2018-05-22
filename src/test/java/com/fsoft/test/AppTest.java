@@ -9,7 +9,6 @@ import com.fsoft.model.RegisterScreen;
 
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -17,50 +16,36 @@ import org.testng.annotations.Test;
 public class AppTest extends BaseWeb {
     public LoginScreen login;
     public RegisterScreen res;
-    public String username="";
-    public String password="";
-    @BeforeSuite
-    public void initGeneral ()
-    {
-        this.init();
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-    }
+    public String usernameAdmin="webgoat";
+    public String passwordAdmin="webgoat";
 
     @BeforeTest
     public void initTest()
     {
-        
+        this.init();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+
         driver.get("http://localhost:8080/WebGoat/login");
         login = new LoginScreen();
         res = new RegisterScreen();
-    }
+    }    
 
     @Test
-    public void verifyRegisterNewUser ()
-    {
-        username = randomString(10);
-        password = randomString(10);
-        element(login.linkRegister).click();
-        element(res.inputUserName).sendKeys(username);
-        element(res.inputPassword).sendKeys(password);
-        element(res.inputConfirmPassword).sendKeys(password);
-        element(res.checkboxTermCondition).click();
-        element(res.buttonSignUp).click();
-        Assert.assertTrue(element(login.textWebTitle).isDisplayed());
-
-    }
-
-    @Test 
-    public void verifyLoginValid ()
+    public void verifyLogoutAdmin ()
     {
         element(login.buttonUserMenu).click();
         element(login.buttonLogOut).click();
+        Assert.assertEquals(element(login.textSuccessLogout).getText(), "You have logged out successfully");
+    }
 
-        element(login.inputUsername).sendKeys(username);
-        element(login.inputPassword).sendKeys(password);
+    @Test 
+    public void verifyLoginAdminValid ()
+    {        
+
+        element(login.inputUsername).sendKeys(usernameAdmin);
+        element(login.inputPassword).sendKeys(passwordAdmin);
         element(login.buttonSignIn).click();
-        
-        Assert.assertTrue(element(login.textWebTitle).isDisplayed());
+        Assert.assertEquals(element(login.textWebTitle).getText(), "How to work with WebGoat");
     }
 
     @Test
@@ -69,7 +54,7 @@ public class AppTest extends BaseWeb {
         element(login.inputUsername).sendKeys(randomString(10));
         element(login.inputPassword).sendKeys(randomString(10));
         element(login.buttonSignIn).click();
-        Assert.assertEquals(element(login.textInvalidLogin).getText(),"Invalid username and password.");
+        Assert.assertEquals(element(login.textInvalidLogin).getText(),"Invalid username and password!");
     }
 
 
@@ -87,8 +72,7 @@ public class AppTest extends BaseWeb {
     @AfterTest
     public void tearDown ()
     {
-        driver.quit();
+        driver.close();
     }
-
 
 }
